@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carômetro</title>
-    <script src="script.js" defer></script>
     <style>
       * {
         margin: 0;
@@ -34,22 +33,10 @@
         gap: 0.1em;
       }
 
-      header .icon {
-        width: 1em;
-        height: 1em;
-        background: white;
-        clip-path: polygon(
-          50% 0%,
-          61% 35%,
-          98% 35%,
-          68% 57%,
-          79% 91%,
-          50% 70%,
-          21% 91%,
-          32% 57%,
-          2% 35%,
-          39% 35%
-        );
+      header img {
+        height: 30px;
+        filter: drop-shadow(2px 2px 2px #000000c3);
+        margin: 0px -10px 0px -13px;
       }
 
       .form-container {
@@ -91,7 +78,7 @@
   </head>
   <body>
     <header>
-        Car<span class="icon"></span>metro<span class="icon"></span>
+        <p>Car <img src="img/kid_star.png" alt="estrela"> metr <img src="img/kid_star.png" alt="estrela"></p>
     </header>
 
     <form class="form-container" action="index.js" method="get">
@@ -107,5 +94,6 @@
       />
       <button type="submit">Enviar</button>
     </form>
+    <script src="script.js" defer></script>
   </body>
 </html>
