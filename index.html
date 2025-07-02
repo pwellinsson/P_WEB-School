@@ -76,6 +76,10 @@
       .form-container button:hover {
         background-color: #444;
       }
+
+      input[type="file"] {
+        background-color: ;
+      }
     </style>
   </head>
   <body>
@@ -85,7 +89,7 @@
 
     <form class="form-container" action="galeria.html" method="get">
       <label for="file">Turma:</label>
-      <input type="file" name="file" id="file">
+      <input type="file" id="file" name="file" webkitdirectory directory multiple>
       <!-- <input
         type="text"
         id="turma"
