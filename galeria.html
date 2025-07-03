@@ -253,5 +253,11 @@
         <p>Wytamy Ramos Soares da Silva</p>
       </div> -->
     </div>
+    <script>
+      const nome = localStorage.getItem('nomeDaTurma');
+      if (nome) {
+        document.getElementById('nomeTurma').innerText = nome;
+      }
+    </script>
   </body>
 </html>
