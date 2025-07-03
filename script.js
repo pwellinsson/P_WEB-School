@@ -1,3 +1,8 @@
+const imagens = document.querySelectorAll('#people img')
+const modal = document.getElementById('modal')
+const modalImg = document.querySelector('#modal img')
+const closeImg = document.querySelector('#btnFechar img')
+
 /*Pegando o nome da pasta */
 function nomePasta() {
     const inputT = document.getElementById('file')
@@ -14,12 +19,10 @@ function nomePasta() {
     }
 }
 
-/*Criando o MODAL */
-const imagens = document.querySelectorAll('.galeria img')
-const modal = document.getElementById('modal')
-const modalImg = document.querySelector('#modal img')
-const closeImg = document.querySelector('#btnFechar img')
+/*Adicionando as imagens dinâmicamente */
 
+
+/*Criando o MODAL */
 imagens.forEach(imagem => {
     imagem.addEventListener('click', () =>{
         const imgSelect = imagem.src
