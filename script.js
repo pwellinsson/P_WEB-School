@@ -1,46 +1,43 @@
-const imagens = document.querySelectorAll('#people img')
-const modal = document.getElementById('modal')
-const modalImg = document.querySelector('#modal img')
-const closeImg = document.querySelector('#btnFechar img')
+const button = document.getElementById('btnEnviar')
 
-/*Pegando o nome da pasta */
-function nomePasta() {
-    const inputT = document.getElementById('file')
-    const files = inputT.files
 
-    if (files.length > 0){
-        const firstFile = files[0]
-        const relativePath = firstFile.webkitRelativePath
+/*Pegando o nome da Pasta*/
+function obterNomePasta() {
+  const inputT = document.getElementById('file')
+  const files = inputT.files
 
-        if (relativePath){
-            const nomePasta = relativePath.split('/')[0]
-            localStorage.setItem('nomeDaTurma', nomePasta)  // salva no localStorage
-        }
+  if (files.length > 0) {
+    const firstFile = files[0]
+    const relativePath = firstFile.webkitRelativePath
+
+    if (relativePath) {
+      const nome = relativePath.split('/')[0]
+      localStorage.setItem('nomeDaTurma', nome)
     }
+  }
 }
 
-/*Adicionando as imagens dinâmicamente */
+/*Carregando as imagens na div #people */
+function carregarImagens() {
+  const input = document.getElementById('file')
+  const files = Array.from(input.files)
 
+  const nomesImagens = []
 
-/*Criando o MODAL */
-imagens.forEach(imagem => {
-    imagem.addEventListener('click', () =>{
-        const imgSelect = imagem.src
-        modalImg.src = imgSelect
-
-        modal.style.display = 'flex'
-        closeImg.style.display = 'block'
-    })
-})
-
-closeImg.addEventListener('click', ()=>{
-    modal.style.display = 'none'
-    closeImg.style.display = 'none'
-})
-
-modal.addEventListener('click', (event) => {
-    if (event.target == modal){
-        modal.style.display = 'none'
-        closeImg.style.display = 'none'
+  files.forEach(file => {
+    if (/\.(jpg|jpeg|png|gif)$/i.test(file.name)) {
+      nomesImagens.push(file.name)
     }
+  })
+
+  localStorage.setItem('imagens', JSON.stringify(nomesImagens))
+}
+
+button.addEventListener('click', e => {
+  e.preventDefault()
+  obterNomePasta()
+  carregarImagens()
+  setTimeout(() => {
+    window.location.href = 'galeria.html'
+  }, 300)
 })
