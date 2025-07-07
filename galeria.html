@@ -11,7 +11,7 @@
       box-sizing: border-box;
     }
 
-    body {
+    body, main{
       font-family: sans-serif;
       background: linear-gradient(to bottom, #1881c5, #3994cf, #7cbae5) fixed;
       display: flex;
@@ -93,17 +93,41 @@
       width: 30px;
       filter: drop-shadow(1px 1px 1px #000);
     }
+
+    #generate-pdf{
+      margin-bottom: 5vh;
+      font-size: 1.2em;
+      font-weight: bolder;
+      padding: 10px;
+      background-color: lightgray;
+      border-radius: 10px;
+      border-style: none;
+    }
+
+    #generate-pdf:hover{
+      background-color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js" integrity="sha512-yu5WG6ewBNKx8svICzUA01vozhmiQCVfzjzW40eCHJdsDRaOifh9hPlWBDex5b32gWCzawTp1F3FJz60ps6TnQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  </script>
 </head>
 <body>
-  <h1 id="nomeTurma">Minha Turma</h1>
-  <div id="people"></div>
-  <div id="modal">
-    <img src="" alt="Imagem ampliada">
-  </div>
-  <div id="btnFechar">
-    <img src="img/close.png" alt="Fechar">
-  </div>
+  <main id="principal">
+    <h1 id="nomeTurma">Minha Turma</h1>
+    <div id="people"></div>
+    <div id="modal">
+      <img src="" alt="Imagem ampliada">
+    </div>
+    <div id="btnFechar">
+      <img src="img/close.png" alt="Fechar">
+    </div>
+  </main>
+
+  <footer>
+    <button id="generate-pdf">Salvar como PDF</button>
+  </footer>
 
   <script>
     const nome = localStorage.getItem('nomeDaTurma')
@@ -112,6 +136,7 @@
     const modal = document.getElementById('modal')
     const modalImg = document.querySelector('#modal img')
     const closeImg = document.querySelector('#btnFechar')
+    const btnGenerate = document.querySelector("#generate-pdf")
 
     if (nome) {
       document.getElementById('nomeTurma').innerText = nome
@@ -154,6 +179,25 @@
         closeImg.style.display = 'none'
       }
     })
+
+    btnGenerate.addEventListener('click', ()=> {
+      
+      //Pegando o conteúdo do PDF
+      const content = document.querySelector('#principal')
+
+      //Configuração do arquivo final
+      const options = {
+        margin: 0,
+        filename: "arquivo.pdf",
+        html2canvas: {scale: 2},
+        jsPDF: {unit: 'mm', format: 'a4', orientation: 'portrait'}
+
+      }
+
+      //Gerando e baixando o pdf
+      html2pdf().set(options).from(content).save();
+    })
+
   </script>
 </body>
 </html>
