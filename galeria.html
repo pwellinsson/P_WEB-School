@@ -74,14 +74,14 @@
     }
 
     #modal img {
-      width: 400px;
+      width: 70vw;
       border-radius: 10px;
       box-shadow: 0 0 10px black;
     }
 
     #btnFechar {
       position: fixed;
-      top: 20px;
+      top: 100px;
       right: 30px;
       z-index: 1001;
       display: none;
@@ -107,6 +107,24 @@
       background-color: white;
       cursor: pointer;
       transition: 0.3s;
+    }
+
+    @media screen and (min-width: 768px) {
+      #modal img{
+        width: 40vw;
+        transition: .3s;
+
+      }
+
+      #btnFechar{
+        top: 20px;
+        transition: .3s
+      }
+
+      #btnFechar img{
+        width: 60px;
+        transition: .3s;
+      }
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js" integrity="sha512-yu5WG6ewBNKx8svICzUA01vozhmiQCVfzjzW40eCHJdsDRaOifh9hPlWBDex5b32gWCzawTp1F3FJz60ps6TnQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
