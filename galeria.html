@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Galeria de Pessoas</title>
   <style>
     * {
@@ -11,7 +11,7 @@
       box-sizing: border-box;
     }
 
-    body{
+    body {
       font-family: sans-serif;
       background: linear-gradient(to bottom, #1881c5, #3994cf, #7cbae5) fixed;
       display: flex;
@@ -26,12 +26,16 @@
       text-align: center;
     }
 
+    #principal {
+      width: 100%;
+      max-width: 1200px;
+    }
+
     #people {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      max-width: 1200px;
       width: 100%;
     }
 
@@ -63,7 +67,6 @@
       text-align: center;
     }
 
-    /* Modal */
     #modal {
       display: none;
       justify-content: center;
@@ -94,59 +97,79 @@
       filter: drop-shadow(1px 1px 1px #000);
     }
 
-    #generate-pdf{
-      margin-bottom: 5vh;
+    #generate-pdf {
+      margin: 30px auto;
       font-size: 1.2em;
       font-weight: bolder;
-      padding: 10px;
+      padding: 10px 20px;
       background-color: lightgray;
       border-radius: 10px;
-      border-style: none;
+      border: none;
+      display: block;
     }
 
-    #generate-pdf:hover{
+    #generate-pdf:hover {
       background-color: white;
       cursor: pointer;
       transition: 0.3s;
     }
 
-    #principal{
-      width: 800px;
-      max-width: 100%;
-      padding: 20px;
+    .pdf-export {
+      background-color: white !important;
+      color: black !important;
+      padding: 20px !important;
+      border-radius: 10px;
+    }
+
+    .pdf-export h1{
+      color: black !important;
+    }
+
+    .pdf-export .person p {
+      color: black !important;
+    }
+
+    .pdf-export .person {
+      background: #f8f8f8 !important;
+      padding: 10px;
+      border-radius: 6px;
     }
 
     @media screen and (min-width: 768px) {
-      #modal img{
+      #modal img {
         width: 40vw;
         transition: .3s;
-
       }
 
-      #btnFechar{
+      #btnFechar {
         top: 20px;
-        transition: .3s
+        transition: .3s;
       }
 
-      #btnFechar img{
+      #btnFechar img {
         width: 60px;
         transition: .3s;
       }
     }
+
     @media print {
-      body, #principal{
-        background-color: white !important;
-        color: black !important;
+      #modal, #btnFechar, #generate-pdf {
+        display: none !important;
+      }
+
+      footer {
+        display: none !important;
       }
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js" integrity="sha512-yu5WG6ewBNKx8svICzUA01vozhmiQCVfzjzW40eCHJdsDRaOifh9hPlWBDex5b32gWCzawTp1F3FJz60ps6TnQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js" integrity="sha512-yu5WG6ewBNKx8svICzUA01vozhmiQCVfzjzW40eCHJdsDRaOifh9hPlWBDex5b32gWCzawTp1F3FJz60ps6TnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
   <div id="principal">
     <h1 id="nomeTurma">Minha Turma</h1>
     <div id="people"></div>
+
     <div id="modal">
       <img src="" alt="Imagem ampliada">
     </div>
@@ -165,8 +188,8 @@
     const container = document.getElementById('people')
     const modal = document.getElementById('modal')
     const modalImg = document.querySelector('#modal img')
-    const closeImg = document.querySelector('#btnFechar')
-    const btnGenerate = document.querySelector("#generate-pdf")
+    const closeImg = document.getElementById('btnFechar')
+    const btnGenerate = document.getElementById("generate-pdf")
 
     if (nome) {
       document.getElementById('nomeTurma').innerText = nome
@@ -187,8 +210,6 @@
       div.appendChild(p)
       container.appendChild(div)
 
-
-      /*Criando Modal*/
       img.addEventListener('click', () => {
         modalImg.src = img.src
         modal.style.display = 'flex'
@@ -196,13 +217,11 @@
       })
     })
 
-    /*Fechando modal ao clicar no botão fechar*/
     closeImg.addEventListener('click', () => {
       modal.style.display = 'none'
       closeImg.style.display = 'none'
     })
 
-    /*Fechando modal ao clicar fora da tela*/
     modal.addEventListener('click', (event) => {
       if (event.target === modal) {
         modal.style.display = 'none'
@@ -210,28 +229,31 @@
       }
     })
 
-    btnGenerate.addEventListener('click', ()=> {
-      document.getElementById('modal').style.display = 'none';
-      document.getElementById('btnFechar').style.display = 'none';
-
-
-      //Pegando o conteúdo do PDF
+    btnGenerate.addEventListener('click', () => {
+      window.scrollTo(0, 0)
       const content = document.querySelector('#principal')
+      content.classList.add('pdf-export')
 
-      //Configuração do arquivo final
       const options = {
         margin: [10, 10, 10, 10],
         filename: "arquivo.pdf",
-        html2canvas: {scale: 2},
-        jsPDF: {unit: 'mm', format: 'a4', orientation: 'portrait'},
-        quality: 0.95
-
+        html2canvas: {
+          scale: 1.5,
+          useCORS: true
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait'
+        }
       }
 
-      //Gerando e baixando o pdf
-      html2pdf().set(options).from(content).save();
+      setTimeout(() => {
+        html2pdf().set(options).from(content).save().then(() => {
+          content.classList.remove('pdf-export')
+        })
+      }, 500)
     })
-
   </script>
 </body>
 </html>
