@@ -11,7 +11,7 @@
       box-sizing: border-box;
     }
 
-    body, main{
+    body{
       font-family: sans-serif;
       background: linear-gradient(to bottom, #1881c5, #3994cf, #7cbae5) fixed;
       display: flex;
@@ -23,6 +23,7 @@
     h1 {
       margin: 20px;
       color: white;
+      text-align: center;
     }
 
     #people {
@@ -109,6 +110,12 @@
       transition: 0.3s;
     }
 
+    #principal{
+      width: 800px;
+      max-width: 100%;
+      padding: 20px;
+    }
+
     @media screen and (min-width: 768px) {
       #modal img{
         width: 40vw;
@@ -126,12 +133,18 @@
         transition: .3s;
       }
     }
+    @media print {
+      body, #principal{
+        background-color: white !important;
+        color: black !important;
+      }
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js" integrity="sha512-yu5WG6ewBNKx8svICzUA01vozhmiQCVfzjzW40eCHJdsDRaOifh9hPlWBDex5b32gWCzawTp1F3FJz60ps6TnQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
   </script>
 </head>
 <body>
-  <main id="principal">
+  <div id="principal">
     <h1 id="nomeTurma">Minha Turma</h1>
     <div id="people"></div>
     <div id="modal">
@@ -140,7 +153,7 @@
     <div id="btnFechar">
       <img src="img/close.png" alt="Fechar">
     </div>
-  </main>
+  </div>
 
   <footer>
     <button id="generate-pdf">Salvar como PDF</button>
@@ -198,16 +211,20 @@
     })
 
     btnGenerate.addEventListener('click', ()=> {
-      
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('btnFechar').style.display = 'none';
+
+
       //Pegando o conteúdo do PDF
       const content = document.querySelector('#principal')
 
       //Configuração do arquivo final
       const options = {
-        margin: 0,
+        margin: [10, 10, 10, 10],
         filename: "arquivo.pdf",
         html2canvas: {scale: 2},
-        jsPDF: {unit: 'mm', format: 'a4', orientation: 'portrait'}
+        jsPDF: {unit: 'mm', format: 'a4', orientation: 'portrait'},
+        quality: 0.95
 
       }
 
